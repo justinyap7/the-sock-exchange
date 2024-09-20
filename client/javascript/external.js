@@ -1,3 +1,4 @@
+console.log('Developing in the dev branch.');
 let page = 1;
 async function getData() {
 	const socks = await fetch(`https://ecs.the-sock-exchange.com/api/socks/${page}/10`)
@@ -27,12 +28,7 @@ async function getData() {
 
 function updateHTML(socks) {
 	try {
-		// for (let i = 0; i < socks.length; i++) {
-		// 	let sock = socks[i];
-		// 	let sockDiv = document.createElement('div');
-		// 	sockDiv.innerHTML = `<div>Color: ${sock.color}</div><div>Size: ${sock.size}</div>`;
-		// 	document.getElementById('data').appendChild(sockDiv);
-		// }
+	
 
 		let table = document.createElement('table');
 		table.className = "table";  // Add CSS class to the table
@@ -48,13 +44,6 @@ function updateHTML(socks) {
 			th.textContent = headers[i];
 			tr.appendChild(th);
 		}
-
-		// Same thing as above but using forEach
-		// headers.forEach(header => {
-		// 	let th = document.createElement('th');
-		// 	th.textContent = header;
-		// 	tr.appendChild(th);
-		// });
 
 		thead.appendChild(tr);
 		table.appendChild(thead);
