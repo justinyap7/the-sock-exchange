@@ -1,4 +1,3 @@
-console.log('Developing in the dev branch.');
 let page = 1;
 async function getData() {
 	const socks = await fetch(`https://ecs.the-sock-exchange.com/api/socks/${page}/10`)
