@@ -1,13 +1,50 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from "react";
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import Sock from "./components/Sock";
 import Footer from "./components/Footer";
+import Promo from "./components/Promo";
 import './App.css'
 import sock_data from './assets/sock.json';
+import promo_data from './assets/promo.json';
 import Search from './components/Search';
 
 function App() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(import.meta.env.VITE_SOCKS_API_URL);
+        if (!response.ok) {
+          throw new Error('Data could not be fetched!');
+        }
+        const json_response = await response.json();
+        setData(json_response); // assign JSON response to the data variable.
+      } catch (error) {
+        console.error('Error fetching socks:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleDelete = async (sockId) => {
+    try {
+      // Make an API request to delete the sock with the given sockId
+      const response = await fetch(`${import.meta.env.VITE_SOCKS_API_URL}/${sockId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Sock could not be deleted!');
+      }
+      // Update the state or fetch the updated data from the server
+      const updatedData = data.filter(sock => sock._id !== sockId); // Remove the deleted sock from the data array
+      setData(updatedData); // Update the state with the updated data
+    } catch (error) {
+      console.error('Error deleting sock:', error);
+    }
+  };
 
   return (
     <>
@@ -40,7 +77,7 @@ function App() {
                 <a className="nav-link disabled" aria-disabled="true">Disabled</a>
               </li>
             </ul>
-            <Search />
+            <Search setData={setData} />
           </div>
         </div>
       </nav>
@@ -49,8 +86,21 @@ function App() {
         <div className="container-fluid">
           <div className="row">
             Both socks and space rockets 🚀 will take you to new heights, but only one will get cold feet!
-            <div className="card-container"></div>
-            <Sock data={sock_data} />
+            <div className="card-container d-flex flex-row justify-content-start" style={{ gap: "20px", padding: "20px" }}>
+              {
+                promo_data.map((promo) => (
+                  <Promo key={promo.id} data={promo} />
+                ))
+              }
+            </div>
+            <div className="card-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}></div>
+            {
+              // Change from static sock_data to data coming from sock API
+              data.map((sock) => (
+                <Sock key={sock._id} data={sock} handleDelete={handleDelete} />
+                // Change id to _id. _id is the key in the API response
+              ))
+            }
           </div>
           <Footer environment="DEVELOPMENT" />
         </div>
