@@ -1,0 +1,40 @@
+/* Make the form span half of the screen on the right */
+.form-container {
+    display: flex;
+    justify-content: flex-start; /* Align the form to the right */
+    width: 100vw;
+    height: 100vh; /* Make sure it fills the height of the screen */
+    padding-right: 20px; /* Some padding from the edge of the screen */
+    padding-bottom: 800px; /* Increase bottom padding */
+    box-sizing: border-box;
+  }
+  
+  .form {
+    width: 50%; /* Half the screen width */
+    display: flex;
+    flex-direction: column; /* Stack the form elements */
+    align-items: flex-start; /* Align the form items to the right */
+    
+  }
+  
+  .form-group {
+    width: 100%; /* Ensure each form group takes full width */
+    margin-bottom: 20px; /* Add some space between form groups */
+    display: flex;
+    flex-direction: column; /* Make label and input stack vertically */
+  }
+  
+  .form-label {
+    text-align: left; /* Align the label text to the right */
+    margin-bottom: 8px; /* Add some space between the label and input */
+    font-weight: bold; /* Make label bold */
+  }
+  
+  .form-input {
+    width: 100%; /* Full width of the container */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
